@@ -25,12 +25,14 @@ var GenerateImage = (text, response) => {
   const api = gen.generate({
     prompt: text,
     apiKey: "sk-mNuJohiDTdyYBro38Rp5K42pE1eXOOWC1C2dU8TAdpRaRnLm",
+    width: 2048,
+    height: 2048,
   });
   api.on("image", ({ buffer, filePath }) => {
-    // var imageSrc = filePath.replace(
-    //   "/Users/lech/Dropbox/_react_course/firstapp/AIServer",
-    //   "http://localhost:8081"
-    // );
+    var imageSrc = filePath.replace(
+      "/Users/lech/Dropbox/_react_course/firstapp/AIServer",
+      "http://localhost:8081"
+    );
     var imageSrc = filePath;
     // response.send(`<img src=${imageSrc}>`);
     response.send(imageSrc);
