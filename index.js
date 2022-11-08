@@ -10,6 +10,10 @@ app.use((req, res, next) => {
 
 app.use("/.out", express.static(__dirname + "/.out"));
 
+app.get("/", function (request, response) {
+  response.send("Hello from the root application URL");
+});
+
 app.get("/page/:id", function (request, response) {
   // response.send("Hello from the root application URL");
   var id = request.params.id;
@@ -25,17 +29,16 @@ var GenerateImage = (text, response) => {
   const api = gen.generate({
     prompt: text,
     apiKey: "sk-mNuJohiDTdyYBro38Rp5K42pE1eXOOWC1C2dU8TAdpRaRnLm",
-    width: 2048,
-    height: 2048,
+    width: 512,
+    height: 512,
   });
   api.on("image", ({ buffer, filePath }) => {
-    var imageSrc = filePath.replace(
-      "/Users/lech/Dropbox/_react_course/firstapp/AIServer",
-      "http://localhost:8081"
-    );
-    var imageSrc = filePath;
+    // var imageSrc = filePath.replace(
+    //   "/Users/lech/Dropbox/_react_course/firstapp/AIServer",
+    //   "http://localhost:8081"
+    // );
     // response.send(`<img src=${imageSrc}>`);
-    response.send(imageSrc);
+    // response.send(imageSrc);
     console.log("Image", buffer, filePath);
   });
   api.on("end", (data) => {
