@@ -3,24 +3,30 @@ var express = require("express");
 var app = express();
 var server = require("http").Server(app);
 
+// Allow CORS access to the api server
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   next();
 });
 
+// Expose .out folder to serve images to client
 app.use("/.out", express.static(__dirname + "/.out"));
 
+// Send test test response when accessing root
 app.get("/", function (request, response) {
   response.send("Hello from the root application URL");
 });
 
+// Process the API request from a client
 app.get("/page/:id", function (request, response) {
-  // response.send("Hello from the root application URL");
+  // Get the data from the API request and write it to 'id'
   var id = request.params.id;
-  // do something with id
-  // send a response to user based on id
-  var obj = { id: id, Content: "content " + id };
+
+  // Invoke the stability API
+  // include the 'response' so we can
+  // send something back to the client
   GenerateImage(id, response);
+
   // response.writeHead(200, { "Content-Type": "application/json" });
   // response.write(JSON.stringify(obj));
 });
@@ -33,18 +39,18 @@ var GenerateImage = (text, response) => {
     height: 512,
   });
   api.on("image", ({ buffer, filePath }) => {
-    // var imageSrc = filePath.replace(
-    //   "/Users/lech/Dropbox/_react_course/firstapp/AIServer",
-    //   "http://localhost:8081"
-    // );
-    // response.send(`<img src=${imageSrc}>`);
-    // response.send(imageSrc);
+    var imageSrc = filePath.replace(
+      // Hiroku fix
+      "/app",
+      "https://skiesofastaapi.herokuapp.com"
+    );
+    // Send the image URL back to the client
+    response.send(imageSrc);
     console.log("Image", buffer, filePath);
   });
   api.on("end", (data) => {
     console.log("Generating Complete", data);
   });
-  // return imageSrc;
 };
 
 server.listen(process.env.PORT || 8081, function () {

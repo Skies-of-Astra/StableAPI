@@ -2,7 +2,7 @@
   "name": "aiserver",
   "version": "1.0.0",
   "description": "Stable diffusion test",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
