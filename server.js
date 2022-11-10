@@ -34,7 +34,7 @@ app.get("/page/:id", function (request, response) {
 var GenerateImage = (text, response) => {
   const api = gen.generate({
     prompt: text,
-    apiKey: "sk-mNuJohiDTdyYBro38Rp5K42pE1eXOOWC1C2dU8TAdpRaRnLm",
+    apiKey: "sk-lOAKO5luQIwHJ5torbFjT7uGqQ6GZgbLtw76eA2X9Ar9q7sP",
     width: 512,
     height: 512,
   });
