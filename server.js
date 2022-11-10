@@ -3,6 +3,8 @@ var express = require("express");
 var app = express();
 var server = require("http").Server(app);
 
+var myKey = process.env.API_KEY;
+
 // Allow CORS access to the api server
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -34,7 +36,7 @@ app.get("/page/:id", function (request, response) {
 var GenerateImage = (text, response) => {
   const api = gen.generate({
     prompt: text,
-    apiKey: "sk-lOAKO5luQIwHJ5torbFjT7uGqQ6GZgbLtw76eA2X9Ar9q7sP",
+    apiKey: myKey,
     width: 512,
     height: 512,
   });
