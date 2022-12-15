@@ -1,9 +1,23 @@
-var gen = require("stability-client");
+// require("dotenv").load();
+// var fs = require('fs');
+
 var express = require("express");
 var app = express();
 var server = require("http").Server(app);
 
-var myKey = process.env.API_KEY;
+const dotenv = require("dotenv");
+dotenv.config();
+
+var ConnectDB = require("./lib/DataBase.js");
+ConnectDB.start();
+
+var ImgGen = require("./lib/ImageGenerator.js");
+
+server.listen(process.env.PORT || 8081, function () {
+  console.log("Listening on " + server.address().port);
+});
+
+const imageStore = {};
 
 // Allow CORS access to the api server
 app.use((req, res, next) => {
@@ -20,41 +34,26 @@ app.get("/", function (request, response) {
 });
 
 // Process the API request from a client
-app.get("/page/:id", function (request, response) {
-  // Get the data from the API request and write it to 'id'
-  var id = request.params.id;
+app.get(
+  "/page/:prompt/:story1/:story2/:story3/:story4",
+  function (request, response) {
+    // Get the data from the API request and write it to 'id'
+    var prompt = request.params.prompt;
+    var storyObject = {
+      story1: request.params.story1,
+      story2: request.params.story2,
+      story3: request.params.story3,
+      story4: request.params.story4,
+    };
 
-  // Invoke the stability API
-  // include the 'response' so we can
-  // send something back to the client
-  GenerateImage(id, response);
+    // console.log(storyObject, prompt);
+    // Invoke the stability API
+    // include the 'response' so we can
+    // send something back to the client
 
-  // response.writeHead(200, { "Content-Type": "application/json" });
-  // response.write(JSON.stringify(obj));
-});
+    ImgGen.GenerateImage(prompt, response, storyObject);
 
-var GenerateImage = (text, response) => {
-  const api = gen.generate({
-    prompt: text,
-    apiKey: myKey,
-    width: 512,
-    height: 512,
-  });
-  api.on("image", ({ buffer, filePath }) => {
-    var imageSrc = filePath.replace(
-      // Hiroku fix
-      "/app",
-      "https://skiesofastaapi.herokuapp.com"
-    );
-    // Send the image URL back to the client
-    response.send(imageSrc);
-    console.log("Image", buffer, filePath);
-  });
-  api.on("end", (data) => {
-    console.log("Generating Complete", data);
-  });
-};
-
-server.listen(process.env.PORT || 8081, function () {
-  console.log("Listening on " + server.address().port);
-});
+    // response.writeHead(200, { "Content-Type": "application/json" });
+    // response.write(JSON.stringify(obj));
+  }
+);
