@@ -2,8 +2,16 @@
 This app interfaces with the Stability API and generates a comic book panel based on a user text prompt.
 
 ## Libraries / API's
-### Express
-### Stability api 
-Used to generate an image from a user submitted text prompt
-### MongoDB
-Stores the text prompt and image URL
+This project uses the following technolgies:
+* Express
+* Stability api
+* Cloudinary
+* MongoDB
+
+## Setup
+To run this project, clone the repo:
+
+```
+$ cd ../repofolder
+$ npm start
+```
