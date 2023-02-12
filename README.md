@@ -21,7 +21,7 @@ Load  up **localhost:8081** in a browser, a greeting should displayed in the dev
 ### Invoke the API without a client
 You can manually format a request to the API with the following URL structure:
 
-**localhost:8081:/"prompt1"/"prompt2"/"prompt3"/"prompt4"**
+**localhost:8081:/"string1"/"string2"/"string3"/"string4"**
 
 ## Features
 * Uses express to create a simple rest api
