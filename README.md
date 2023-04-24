@@ -9,7 +9,7 @@ This project uses the following technolgies:
 * MongoDB
 
 ## Setup
-To run this project, clone the repo:
+To run this project, clone the repo and then:
 
 ```
 $ cd ../repofolder
